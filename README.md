@@ -7,7 +7,7 @@
 git clone https://github.com/ciaranmolloy/crawler.git
 ```
 
-### 2. Build the project
+### 2. Navigate inside the git project, then build the project
 ```
 mvn clean install
 ```
@@ -20,3 +20,4 @@ java -jar target/crawler-0.0.1-SNAPSHOT.jar
 ### 4. Navigate to localhost to view  list of links
 
 [http://localhost:8080/test/crawl](http://localhost:8080/test/crawl)
+
