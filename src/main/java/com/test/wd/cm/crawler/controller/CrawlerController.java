@@ -22,5 +22,4 @@ public class CrawlerController {
 		
 		return service.getHrefLinks();
 	}
-
 }
