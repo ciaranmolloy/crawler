@@ -1,17 +1,14 @@
-/**
- * 
- */
 package com.test.wd.cm.crawler.service;
 
-import org.springframework.stereotype.Service;
+import feign.RequestLine;
 
 /**
  * @author Ciaran
  *
  */
-@Service
-public class CrawlerService {
+public interface CrawlerService {
 	
-	
+	@RequestLine("GET /")
+	public String getHTML();
 
 }
