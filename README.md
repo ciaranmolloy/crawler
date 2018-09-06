@@ -1,6 +1,6 @@
 # WIPRO CRAWLER
 
-## To use service:
+## To use service, open a terminal window and follow the following instructions:
 
 ### 1. Git clone this repo into a local directory
 ```

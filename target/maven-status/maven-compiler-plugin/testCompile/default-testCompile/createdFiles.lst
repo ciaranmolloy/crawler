@@ -1,1 +1,3 @@
+com\test\wd\cm\crawler\controller\CrawlerControllerTest.class
 com\test\wd\cm\crawler\CrawlerApplicationTests.class
+com\test\wd\cm\crawler\service\CrawlerServiceTest.class
