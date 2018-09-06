@@ -19,5 +19,5 @@ java -jar target/crawler-0.0.1-SNAPSHOT.jar
 
 ### 4. Navigate to localhost to view  list of links
 ```
-* http://localhost:8080/test/crawl
+[http://localhost:8080/test/crawl](http://localhost:8080/test/crawl)
 ```
