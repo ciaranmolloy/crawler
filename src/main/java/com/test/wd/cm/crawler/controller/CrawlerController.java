@@ -1,6 +1,7 @@
 package com.test.wd.cm.crawler.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,9 +18,9 @@ public class CrawlerController {
 	@Autowired
 	private CrawlerService service;
 
-	@RequestMapping(value = "/crawl", method = GET)
-	public List<String> crawlWipro() {
+	@RequestMapping(value = "/crawl/{url}", method = GET)
+	public List<String> crawlWipro(@PathVariable final Object url) {
 		
-		return service.getHrefLinks();
+		return service.getHrefLinks("https://" + url);
 	}
 }
