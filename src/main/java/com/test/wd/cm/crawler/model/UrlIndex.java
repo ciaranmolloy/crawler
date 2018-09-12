@@ -17,7 +17,7 @@ public class UrlIndex implements Serializable {
 	private List<String> urlList;
 	
 	public UrlIndex(final String id, final List<String> urlList) {
-		this.id = id;
+		this.setId(id);
 		this.urlList = urlList;
 	}
 
@@ -27,6 +27,14 @@ public class UrlIndex implements Serializable {
 	
 	public List<String> getUrlList() {
 		return this.urlList;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

@@ -3,10 +3,14 @@ package com.test.wd.cm.crawler.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,34 +24,48 @@ import com.test.wd.cm.crawler.redis.RedisUrlIndex;
 
 @Component
 public class CrawlerService {
+	private static final int SECONDS_10 = 1000 * 10;
+	private static final String REFERRER = "http://www.google.com";
+	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0";
 	private static final String HREF = "href";
 	private static final String ANCHOR_HREF = "a[href]";
+
+	private Map<String, List<String>> map = new HashMap<String, List<String>>();
 
 	@Autowired
 	private RedisUrlIndex redisUrlIndex;
 
-	public List<String> getHrefLinks(final String url) {
-		List<String> strings = Collections.EMPTY_LIST;
+	public Map getHrefLinks(final String url) {
+		if (!map.containsKey(url)) {
+			mapUrlLinks(url);
+		}
+		return map;
+	}
+
+	private void mapUrlLinks(final String url) {
+		
 		try {
-			final Document doc = Jsoup.connect(url).get();
+			
+			final Document doc = Jsoup.connect(url)
+					.userAgent(USER_AGENT)
+					.referrer(REFERRER)
+					.timeout(SECONDS_10)
+					.ignoreHttpErrors(true)
+					.get();
+
 			final Elements links = doc.select(ANCHOR_HREF);
-			strings = createLinksList(url, links);
 
-			final UrlIndex index = new UrlIndex(url, strings);
-			redisUrlIndex.save(index);
+			final List<String> strings = createLinksList(url, links);
 
-			for (final String s : strings) {
-				if (!redisUrlIndex.existsById(url)) {
-					getHrefLinks(url);
-				}
+			map.put(url, strings);
+
+			for (final String nextUrl : strings) {
+				getHrefLinks(nextUrl);
 			}
-
-		} catch (final IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return strings;
 	}
 
 	private List<String> createLinksList(final String url, final Elements links) {
