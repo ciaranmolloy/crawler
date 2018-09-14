@@ -16,7 +16,6 @@ public class CrawlerApplication {
 	private static RedisServer redisServer;
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(CrawlerApplication.class, args);
 	}
 
@@ -24,11 +23,9 @@ public class CrawlerApplication {
 	public void startRedisServer() {
 		try {
 			redisServer = new RedisServer(6379);
-
 			redisServer.start();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

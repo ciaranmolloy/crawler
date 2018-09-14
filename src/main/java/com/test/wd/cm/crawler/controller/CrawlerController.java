@@ -9,7 +9,6 @@ import com.test.wd.cm.crawler.service.CrawlerService;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,7 +20,6 @@ public class CrawlerController {
 
 	@RequestMapping(value = "/crawl/{url}", method = GET)
 	public Map crawlWipro(@PathVariable final Object url) {
-		
 		return service.getHrefLinks("https://" + url);
 	}
 }
