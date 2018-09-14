@@ -7,7 +7,8 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,7 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.test.wd.cm.crawler.service.CrawlerService;
 
@@ -28,14 +29,13 @@ public class CrawlerControllerTest {
 	@InjectMocks
 	private CrawlerController controller;
 	
-	private List<String> strings;
+	private Map testMap = new HashMap();
 	
 	@Before
 	public void setup() {
-		strings = new ArrayList();
-		strings.add("s1");
-		strings.add("s2");
-		strings.add("s3");
+		testMap.put("url1", new ArrayList());
+		testMap.put("url2", new ArrayList());
+		testMap.put("url3", new ArrayList());
 	}
 	
 	@After
@@ -45,14 +45,14 @@ public class CrawlerControllerTest {
 
 	@Test
 	public void testGetLinksSuccessful() {
-		when(service.getHrefLinks()).thenReturn(strings);
+		when(service.getHrefLinks("https://url")).thenReturn(testMap);
 		
-		final List<String> response = controller.crawlWipro();
+		final Map response = controller.crawlWipro("url");
 		
-		assertNotNull(strings);
+		assertNotNull(response);
 		assertEquals(3, response.size());
 		
-		verify(service).getHrefLinks();
+		verify(service).getHrefLinks("https://url");
 	}
 	
 	
